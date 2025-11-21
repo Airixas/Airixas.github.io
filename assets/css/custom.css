@@ -1,0 +1,512 @@
+body {
+    font-family: 'Courier New', monospace;
+    font-size: 20px;
+    color: #35ee54;
+}
+h1 {
+    font-family: 'Garamond', serif;
+    font-size: 36px;
+    font-weight: bold;
+    color: #1a73e8;
+}
+
+h2 {
+    font-family: 'Garamond', serif;
+    font-size: 30px;
+    font-weight: 600;
+    color: #1100ff;
+}
+h3 {
+    font-family: 'Garamond', serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: #f70606;
+}
+h3 {
+    font-family: 'Garamond', serif;
+    font-size: 24px;
+    font-weight: 500;
+    color: #1b10b4;
+}
+
+h4 {
+    font-family: 'Garamond', serif;
+    font-size: 20px;
+    font-weight: 400;
+    color: #9c27b0;
+}
+h5 {
+    font-family: 'Garamond', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #5d02f0;
+}
+h6 {
+    font-family: 'Garamond', serif;
+    font-size: 16px;
+    font-weight: 400;
+    color: #705072;
+}
+p {
+    font-family: 'Georgia', serif;
+    font-size: 18px;
+    font-weight: 400;
+    color: #049c43;
+}
+
+
+.about .content {
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f5ddf7;
+    border-radius: 20px;
+    box-shadow: 0 4px 12px rgba(216, 44, 210, 0.719);
+}
+
+.about .content ul li {
+    margin-bottom: 15px;
+}
+
+.resume .resume-item {
+    padding: 20px;
+    margin-bottom: 20px;
+    background-color: #f5ddf7;
+    border-radius: 10px;
+    box-shadow: 0 4px 12px rgba(216, 44, 210, 0.719);
+}
+
+.resume .resume-item ul li {
+    margin-bottom: 10px;
+}
+
+.portfolio .portfolio-item {
+    padding: 15px;
+    background-color: #f5ddf7;
+    border-radius: 10px;
+    box-shadow: 0 6px 15px rgba(216, 44, 210, 0.719);
+    transition: transform 0.3s ease, box-shadow 0.3s ease; 
+}
+
+.portfolio .portfolio-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 12px 25px rgba(0, 0, 0, 0.15);
+}
+
+.about, .resume, .portfolio {
+    padding-top: 40px;
+    padding-bottom: 40px;
+}
+
+.navmenu {
+    background-color: hsl(332, 65%, 64%);
+    border-radius: 20px;
+    padding: 5px;
+    box-shadow: 0 4px 15px rgba(65, 9, 9, 0.887);
+}
+
+.navmenu a,
+.navmenu a:focus {
+    color: hsl(332, 83%, 49%);           
+    background: transparent;   
+    border-radius: 8px;        
+    transition: all 0.3s ease;
+}
+
+.navmenu a:hover,
+.navmenu li:hover>a,
+.navmenu .active,
+.navmenu .active:focus {
+    color: #d881a5;
+    background-color:hsl(332, 61%, 52%);
+    transform: scale(1.05);
+}
+
+.skills .progress-bar-wrap {
+    background: #f2c2e7;
+    border-radius: 20px;
+    height: 14px;
+    margin-bottom: 15px;
+}
+
+.skills .progress-bar {
+    background: linear-gradient(90deg, #512968, rgb(163, 49, 181)); 
+    border-radius: 20px;
+    height: 14px;
+    transition: width 1s ease-in-out;
+}
+
+.skills .progress-bar:hover {
+    filter: brightness(1.2);
+}
+
+
+button, .btn {
+
+    font-family: 'Verdana', sans-serif;
+    font-size: 16px;
+    font-weight: bold;
+    color: #ffffff;
+    background-color: #ff5722;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+button:hover, .btn:hover {
+    background-color: #00eeff;
+    transform: scale(1.05);
+}
+
+button:active, .btn:active {
+    background-color: #00ff0d;
+    transform: scale(0.98); 
+}
+
+a {
+    font-family: 'Tahoma', sans-serif;
+    font-size: 16px;
+    color: #00ff00;
+    text-decoration: none;
+    transition: all 0.3s ease;
+}
+
+
+a:hover {
+    color: #ff07c1;
+    text-decoration: underline;
+    letter-spacing: 1px;
+}
+
+
+a:active {
+    color: #500723;
+    transform: scale(0.98);
+}
+
+
+/* Resume sąrašų stilius */
+.resume-ulist {
+    list-style: none;
+    padding-left: 0;
+    margin-top: 10px;
+}
+
+.resume-ulist li {
+    position: relative;
+    padding-left: 28px;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    font-size: 18px;
+}
+
+.resume-ulist li::before {
+    content: "*";
+    position: absolute;
+    left: 0;
+    top: 0;
+    color: #750b55;
+    font-size: 20px;
+    font-weight: bold;
+}
+
+/* Numeruotas sąrašas su counter */
+.resume-ol {
+    counter-reset: item;
+    list-style: none;
+    padding-left: 0;
+}
+
+.resume-ol li {
+    counter-increment: item;
+    padding-left: 35px;
+    margin-bottom: 10px;
+    font-size: 16px;
+    position: relative;
+}
+
+.resume-ol li::before {
+    content: counter(item) ". ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: bold;
+    font-size: 18px;
+    color: #1e88e5;
+}
+
+/* Vidinis OL (nested list) */
+.custom-ol ol {
+    counter-reset: subitem;
+    margin-left: 30px;
+    margin-top: 8px;
+    list-style: none;
+}
+
+.custom-ol ol li {
+    position: relative;
+    padding-left: 32px;
+    margin-bottom: 6px;
+    font-size: 15px;
+    counter-increment: subitem;
+}
+
+.custom-ol ol li::before {
+    content: counter(subitem, lower-alpha) ") ";
+    position: absolute;
+    left: 0;
+    top: 0;
+    font-weight: 600;
+    color: #7b1fa2;
+}
+
+/* ==== Paslaugų lentelė (Services) ==== */
+
+.services-table-wrapper {
+    margin-top: 30px;
+}
+
+.services-table-title {
+    text-align: center;
+    margin-bottom: 12px;
+    font-weight: 700; 
+}
+
+
+.services-table {
+    width: 100%;
+    border-collapse: collapse;
+    font-size: 0.95rem;
+    overflow: hidden;
+    border-radius: 12px;
+}
+
+
+.services-table th,
+.services-table td {
+    padding: 12px 16px;     
+    text-align: center;      
+}
+
+
+.services-table thead tr {
+    background: linear-gradient(90deg, #512968, #a331b5);
+    color: #ffffff;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+}
+
+/* Zebra stilius hover efektas */
+
+.services-table tbody tr:nth-child(odd) {
+    background-color: #fbe6ff;   
+}
+
+.services-table tbody tr:nth-child(even) {
+    background-color: #f2d0fb;   
+}
+
+.services-table tbody tr:hover {
+    background-color: #ffeefe;   
+    transform: scale(1.01);
+    transition: all 0.2s ease;
+}
+
+/* ===== sekcijų atsiradimas ===== */
+
+@keyframes fadeInUpSection {
+  from {
+    opacity: 0;
+    transform: translateY(40px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.animate-section {
+  opacity: 0;
+  animation: fadeInUpSection 0.9s ease-out forwards;
+}
+
+/* Šiek tiek skirtingi uždelsimai, kad sektųsi vienas po kito */
+#about.animate-section    { animation-delay: 0.1s; }
+#resume.animate-section   { animation-delay: 0.2s; }
+#services.animate-section { animation-delay: 0.3s; }
+
+/* ===== Page pre-loader ===== */
+
+#preloader {
+  position: fixed;
+  inset: 0;                        /* top:0; right:0; bottom:0; left:0; */
+  background: #050816;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999;
+  animation: preloaderFade 2.2s ease-out forwards;
+}
+
+/* Taškų „pulsavimo“ animacija */
+.loader-dots {
+  display: flex;
+  gap: 10px;
+}
+
+.loader-dots span {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: #ff6ec7;
+  animation: pulseDots 0.8s ease-in-out infinite;
+}
+
+.loader-dots span:nth-child(2) { animation-delay: 0.15s; }
+.loader-dots span:nth-child(3) { animation-delay: 0.30s; }
+
+@keyframes pulseDots {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.4;
+  }
+  50% {
+    transform: scale(1.8);
+    opacity: 1;
+  }
+}
+
+/* Pats preloaderis po ~2 s pranyksta */
+@keyframes preloaderFade {
+  0% {
+    opacity: 1;
+    visibility: visible;
+  }
+  80% {
+    opacity: 1;
+    visibility: visible;
+  }
+  100% {
+    opacity: 0;
+    visibility: hidden;
+  }
+}
+
+/* ===== Animacijos gradientas Services sekcijai ===== */
+
+.services.section {
+  position: relative;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.services.section::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: -1;
+  background: linear-gradient(120deg,
+    #fce1ff,
+    #e0c3fc,
+    #c1e5ff,
+    #fce1ff
+  );
+  background-size: 250% 250%;
+  animation: servicesGradientMove 16s ease-in-out infinite;
+  opacity: 0.6;
+}
+
+.services .container {
+  position: relative;  /* kad turinys būtų virš fono */
+  z-index: 1;
+}
+
+@keyframes servicesGradientMove {
+  0%   { background-position: 0% 50%; }
+  50%  { background-position: 100% 50%; }
+  100% { background-position: 0% 50%; }
+}
+
+.about.section {
+  position: relative;
+  overflow: hidden;
+}
+
+.floating-shapes {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  z-index: -1;
+}
+
+.floating-shapes .shape {
+  position: absolute;
+  opacity: 0.35;
+}
+
+/* Apskritimas – čia viskas gerai, paliekam */
+.floating-shapes .shape-circle {
+  width: 90px;
+  height: 90px;
+  border-radius: 50%;
+  background: radial-gradient(circle, #ff6ec7, #9b5cff);
+  top: 12%;
+  right: 6%;
+  animation: floatShape 7s ease-in-out infinite;
+}
+
+/* Kvadratas – perkeliu į kitą vietą, kad neslėptų turinys */
+.floating-shapes .shape-square {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #00e5ff, #29ffc6);
+  bottom: 10%;
+  left: 8%;
+  animation: rotateShape 12s linear infinite;
+}
+
+/* Trikampis – ryški spalva, kad gerai matytųsi */
+.floating-shapes .shape-triangle {
+  width: 0;
+  height: 0;
+  border-left: 45px solid transparent;
+  border-right: 45px solid transparent;
+  border-bottom: 80px solid #ffe066;
+  top: 25%;
+  left: 10%;              
+  animation: floatShape 6s ease-in-out infinite alternate;
+}
+
+
+/* Animacijos */
+@keyframes floatShape {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-20px); }
+  100% { transform: translateY(0); }
+}
+
+@keyframes rotateShape {
+  0%   { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+/* ===== Animacija 2 – social ikonų judėjimas ===== */
+
+@keyframes floatIcon {
+  0%   { transform: translateY(0); }
+  50%  { transform: translateY(-6px); }
+  100% { transform: translateY(0); }
+}
+
+.hero .social-links a {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  animation: floatIcon 2.4s ease-in-out infinite;
+}
+
+/* „bangelės“ efektas */
+.hero .social-links a:nth-child(2) { animation-delay: 0.15s; }
+.hero .social-links a:nth-child(3) { animation-delay: 0.30s; }
+.hero .social-links a:nth-child(4) { animation-delay: 0.45s; }
