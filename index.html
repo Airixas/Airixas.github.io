@@ -720,13 +720,13 @@
 
     </section><!-- /Testimonials Section -->
 
-    <!-- Contact Section -->
+<!-- Contact Section -->
     <section id="contact" class="contact section">
 
       <!-- Section Title -->
       <div class="container section-title" data-aos="fade-up">
         <h2>Contact</h2>
-        <p>Necessitatibus eius consequatur ex aliquid fuga eum quidem sint consectetur velit</p>
+        <p>Susisiekite su manimi!</p>
       </div><!-- End Section Title -->
 
       <div class="container" data-aos="fade" data-aos-delay="100">
@@ -749,7 +749,6 @@
                 <p>+1 5589 55488 55</p>
               </div>
             </div><!-- End Info Item -->
-
             <div class="info-item d-flex" data-aos="fade-up" data-aos-delay="400">
               <i class="bi bi-envelope flex-shrink-0"></i>
               <div>
@@ -757,45 +756,52 @@
                 <p>info@example.com</p>
               </div>
             </div><!-- End Info Item -->
-
           </div>
-
           <div class="col-lg-8">
-            <form action="forms/contact.php" method="post" class="php-email-form" data-aos="fade-up" data-aos-delay="200">
+            <form id="contactForm" data-aos="fade-up" data-aos-delay="200">
               <div class="row gy-4">
-
                 <div class="col-md-6">
-                  <input type="text" name="name" class="form-control" placeholder="Your Name" required="">
+                  <input type="text" id="first_name" class="form-control" placeholder="Vardas" required>
+                  <small id="error-firstname" class="text-danger d-none">Neteisingas vardas</small>
                 </div>
-
-                <div class="col-md-6 ">
-                  <input type="email" class="form-control" name="email" placeholder="Your Email" required="">
+                <div class="col-md-6">
+                  <input type="text" id="last_name" class="form-control" placeholder="Pavardė" required>
+                  <small id="error-lastname" class="text-danger d-none">Neteisinga pavardė</small>
                 </div>
-
+                <div class="col-md-6">
+                  <input type="email" id="email" class="form-control" placeholder="El. paštas" required>
+                  <small id="error-email" class="text-danger d-none">Neteisingas el. paštas</small>
+                </div>
+                <div class="col-md-6">
+                  <input type="text" id="phone" class="form-control" placeholder="Telefono numeris" required>
+                  <small id="error-phone" class="text-danger d-none">Neteisingas numeris</small>
+                </div>
                 <div class="col-md-12">
-                  <input type="text" class="form-control" name="subject" placeholder="Subject" required="">
+                  <input type="text" id="address" class="form-control" placeholder="Adresas" required>
                 </div>
-
                 <div class="col-md-12">
-                  <textarea class="form-control" name="message" rows="6" placeholder="Message" required=""></textarea>
+                  <label>1. Kaip vertinate mūsų paslaugą?</label>
+                  <input type="range" id="slider1" min="1" max="10" value="5">
+                  <span id="slider1-value">5</span>
                 </div>
-
+                <div class="col-md-12">
+                  <label>2. Kaip vertinate komunikaciją?</label>
+                  <input type="range" id="slider2" min="1" max="10" value="5">
+                  <span id="slider2-value">5</span>
+                </div>
+                <div class="col-md-12">
+                  <label>3. Kaip vertinate bendrą patirtį?</label>
+                  <input type="range" id="slider3" min="1" max="10" value="5">
+                  <span id="slider3-value">5</span>
+                </div>
                 <div class="col-md-12 text-center">
-                  <div class="loading">Loading</div>
-                  <div class="error-message"></div>
-                  <div class="sent-message">Your message has been sent. Thank you!</div>
-
-                  <button type="submit">Send Message</button>
+                  <div id="form-success" class="sent-message d-none">Your message has been sent. Thank you!</div>
+                  <button type="submit">Submit</button>
                 </div>
-
               </div>
             </form>
-          </div><!-- End Contact Form -->
-
         </div>
-
       </div>
-
     </section><!-- /Contact Section -->
 
   </main>
@@ -846,6 +852,7 @@
 
   <!-- Main JS File -->
   <script src="assets/js/main.js"></script>
+  <script src="assets/js/custom.js"></script>
 
 </body>
 
