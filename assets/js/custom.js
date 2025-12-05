@@ -85,7 +85,6 @@ document.addEventListener("DOMContentLoaded", () => {
   function validateAddress() {
     const val = address.value.trim();
     const ok = val.length > 0;       // adresas kaip tekstas – netuščias
-    // jei nori, gali pridėti atskirą <small id="error-address">
     setFieldValidity(address, ok, null);
     return ok;
   }
