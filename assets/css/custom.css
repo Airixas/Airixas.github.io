@@ -510,3 +510,53 @@ a:active {
 .hero .social-links a:nth-child(2) { animation-delay: 0.15s; }
 .hero .social-links a:nth-child(3) { animation-delay: 0.30s; }
 .hero .social-links a:nth-child(4) { animation-delay: 0.45s; }
+
+/* Žaidimo lenta */
+.game-board {
+  display: grid;
+  gap: 10px;
+}
+
+/* Kortelė */
+.game-card {
+  position: relative;
+  width: 100%;
+  padding-top: 100%;           /* kvadratas */
+  border: 1px solid #dee2e6;
+  border-radius: 8px;
+  background: #f8f9fa;
+  cursor: pointer;
+  transition: transform 0.2s ease, background-color 0.2s ease;
+  overflow: hidden;
+}
+
+.game-card-inner {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+/* užversta kortelė – turinys nematomas */
+.game-card:not(.flipped) .game-card-inner {
+  opacity: 0;
+}
+
+/* atversta kortelė – rodom simbolį */
+.game-card.flipped .game-card-inner,
+.game-card.matched .game-card-inner {
+  opacity: 1;
+}
+
+.game-card.flipped {
+  background-color: #fff3cd;
+}
+
+.game-card.matched {
+  background-color: #d1e7dd;
+  cursor: default;
+}
