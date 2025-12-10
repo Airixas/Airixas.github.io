@@ -659,3 +659,238 @@ document.addEventListener("DOMContentLoaded", () => {
   // jeigu nori, kad žaidimas būtų paruoštas iš karto:
   // startGame();
 });
+
+// ====== ŽAIDIMAS: atminties kortelių žaidimas ======
+document.addEventListener("DOMContentLoaded", () => {
+  const boardEl = document.getElementById("game-board");
+  if (!boardEl) return; // jei nėra sekcijos – nieko nedarom
+
+  const diffSelect = document.getElementById("game-difficulty");
+  const startBtn   = document.getElementById("game-start");
+  const resetBtn   = document.getElementById("game-reset");
+  const msgEl      = document.getElementById("game-message");
+
+  const movesEl   = document.getElementById("stat-moves");
+  const matchesEl = document.getElementById("stat-matches");
+  const totalEl   = document.getElementById("stat-total");
+  const timeEl    = document.getElementById("stat-time");
+
+  const bestEasyEl = document.getElementById("best-easy");
+  const bestHardEl = document.getElementById("best-hard");
+
+  // Kortelių duomenys – bent 6 unikalūs simboliai
+  const CARD_VALUES = ["🍎","🍌","🍇","🍉","🥝","🍓","🍒","🍍"];
+
+  // Sudėtingumo nustatymai
+  const CONFIG = {
+    easy: { pairs: 6, columns: 4 }, // 4 x 3
+    hard: { pairs: 8, columns: 4 }  // 4 x 4
+  };
+
+  let currentDifficulty = diffSelect ? diffSelect.value : "easy";
+
+  let boardLocked = false;
+  let openedCards = [];
+  let moves = 0;
+  let matches = 0;
+
+  // Laikmatis
+  let timerInterval = null;
+  let elapsedSeconds = 0;
+  let gameStarted = false;
+
+  // localStorage raktas
+  const BEST_KEY = "memoryBestResults";
+
+  function formatTime(sec) {
+    const m = String(Math.floor(sec / 60)).padStart(2, "0");
+    const s = String(sec % 60).padStart(2, "0");
+    return `${m}:${s}`;
+  }
+
+  function startTimer() {
+    stopTimer();
+    elapsedSeconds = 0;
+    if (timeEl) timeEl.textContent = "00:00";
+    timerInterval = setInterval(() => {
+      elapsedSeconds++;
+      if (timeEl) timeEl.textContent = formatTime(elapsedSeconds);
+    }, 1000);
+  }
+
+  function stopTimer() {
+    if (timerInterval) {
+      clearInterval(timerInterval);
+      timerInterval = null;
+    }
+  }
+
+  // ----- localStorage: geriausi rezultatai -----
+  function loadBestResults() {
+    let best = { easy: null, hard: null };
+    const raw = localStorage.getItem(BEST_KEY);
+    if (raw) {
+      try {
+        const parsed = JSON.parse(raw);
+        if (typeof parsed === "object" && parsed) {
+          best = { ...best, ...parsed };
+        }
+      } catch (e) {
+        console.warn("Cannot parse best results from localStorage", e);
+      }
+    }
+    if (bestEasyEl) bestEasyEl.textContent = best.easy ?? "-";
+    if (bestHardEl) bestHardEl.textContent = best.hard ?? "-";
+    return best;
+  }
+
+  let bestResults = loadBestResults();
+
+  function saveBestResults() {
+    localStorage.setItem(BEST_KEY, JSON.stringify(bestResults));
+  }
+
+  // ----- Statistika + lenta -----
+  function resetStats() {
+    moves = 0;
+    matches = 0;
+    openedCards = [];
+    boardLocked = false;
+    gameStarted = false;
+    stopTimer();
+    elapsedSeconds = 0;
+
+    if (movesEl) movesEl.textContent = "0";
+    if (matchesEl) matchesEl.textContent = "0";
+    if (totalEl) totalEl.textContent = CONFIG[currentDifficulty].pairs;
+    if (timeEl) timeEl.textContent = "00:00";
+    if (msgEl) msgEl.textContent = "";
+  }
+
+  function getShuffledDeck() {
+    const neededPairs = CONFIG[currentDifficulty].pairs;
+    const values = CARD_VALUES.slice(0, neededPairs); // tiek porų, kiek reikia
+    const deck = [...values, ...values]; // dvi kortelės kiekvienai reikšmei
+
+    // Fisher–Yates maišymas
+    for (let i = deck.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      [deck[i], deck[j]] = [deck[j], deck[i]];
+    }
+    return deck;
+  }
+
+  function renderBoard() {
+    boardEl.innerHTML = "";
+    boardEl.classList.remove("easy", "hard");
+    boardEl.classList.add(currentDifficulty);
+
+    const deck = getShuffledDeck();
+    deck.forEach((val, index) => {
+      const card = document.createElement("button");
+      card.type = "button";
+      card.className = "game-card";
+      card.dataset.value = val;
+      card.dataset.index = String(index);
+      card.textContent = "?";                 // paslėpta kortelė
+      card.addEventListener("click", onCardClick);
+      boardEl.appendChild(card);
+    });
+  }
+
+  // paruošia lentą (be laikmačio starto)
+  function prepareBoard() {
+    resetStats();
+    renderBoard();
+  }
+
+  function revealCard(card) {
+    card.classList.add("revealed");
+    card.textContent = card.dataset.value;
+  }
+
+  function hideCard(card) {
+    card.classList.remove("revealed");
+    card.textContent = "?";
+  }
+
+  function handleWin() {
+    stopTimer();
+    if (msgEl) msgEl.textContent = "Laimėjote!";
+
+    // atnaujinam geriausią rezultatą pagal ėjimų skaičių
+    const currentBest = bestResults[currentDifficulty];
+    if (currentBest == null || moves < currentBest) {
+      bestResults[currentDifficulty] = moves;
+      saveBestResults();
+      bestResults = loadBestResults();
+    }
+  }
+
+  // Kortelės paspaudimas
+  function onCardClick(e) {
+    const card = e.currentTarget;
+    if (!gameStarted) return; // žaidimas nepradėtas – ignoruojam
+    if (boardLocked) return;
+    if (card.classList.contains("revealed") || card.classList.contains("disabled")) return;
+
+    revealCard(card);
+    openedCards.push(card);
+
+    if (openedCards.length === 2) {
+      boardLocked = true;
+      moves++;
+      if (movesEl) movesEl.textContent = String(moves);
+
+      const [c1, c2] = openedCards;
+
+      if (c1.dataset.value === c2.dataset.value) {
+        // pora sutapo
+        matches++;
+        if (matchesEl) matchesEl.textContent = String(matches);
+        c1.classList.add("disabled");
+        c2.classList.add("disabled");
+        openedCards = [];
+        boardLocked = false;
+
+        if (matches === CONFIG[currentDifficulty].pairs) {
+          handleWin();
+        }
+      } else {
+        // nesutapo – apverčiam atgal
+        setTimeout(() => {
+          hideCard(c1);
+          hideCard(c2);
+          openedCards = [];
+          boardLocked = false;
+        }, 800);
+      }
+    }
+  }
+
+  // ----- Įvykiai -----
+  if (diffSelect) {
+    diffSelect.addEventListener("change", () => {
+      currentDifficulty = diffSelect.value;
+      prepareBoard(); // kai keičiasi lygis – viskas reset
+    });
+  }
+
+  if (startBtn) {
+    startBtn.addEventListener("click", () => {
+      prepareBoard();    // nauja lenta
+      gameStarted = true;
+      startTimer();      // laikmatis startuoja TIK nuo Start mygtuko
+    });
+  }
+
+  if (resetBtn) {
+    resetBtn.addEventListener("click", () => {
+      prepareBoard();    // restart – be laikmačio starto
+    });
+  }
+
+  // Pirmas kartas: sugeneruojam lentą, laikmatis dar nestartuoja
+  prepareBoard();
+});
+
